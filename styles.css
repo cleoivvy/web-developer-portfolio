@@ -5,10 +5,8 @@
   --muted: #66706b;
   --line: #d7ded6;
   --dark: #0e1513;
-  --dark-soft: #17211f;
   --green: #b7f34b;
   --blue: #3b82f6;
-  --cyan: #35d3c5;
   --amber: #f59e0b;
   --rose: #ef5b75;
   --shadow: 0 28px 90px rgba(13, 17, 16, 0.18);
@@ -214,10 +212,6 @@ h2 {
   color: inherit;
 }
 
-.button:hover {
-  transform: translateY(-1px);
-}
-
 .hero-meta {
   flex-wrap: wrap;
   gap: 10px;
@@ -238,6 +232,57 @@ h2 {
   background: #0a0f0e;
   color: #e5ece8;
   box-shadow: var(--shadow);
+}
+
+.hero-portrait-card {
+  overflow: hidden;
+  border: 1px solid rgba(248, 250, 246, 0.14);
+  background: #0a0f0e;
+  color: #e5ece8;
+  box-shadow: var(--shadow);
+}
+
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.portrait-frame::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border: 12px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.portrait-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-caption {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 18px 20px;
+  background: rgba(183, 243, 75, 0.07);
+}
+
+.portrait-caption span {
+  color: var(--green);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.portrait-caption strong {
+  color: rgba(248, 250, 246, 0.88);
+  font-size: 1rem;
 }
 
 .terminal-top {
@@ -293,19 +338,6 @@ pre {
   background: rgba(183, 243, 75, 0.07);
 }
 
-.terminal-summary span {
-  color: var(--green);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.74rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.terminal-summary strong {
-  color: rgba(248, 250, 246, 0.88);
-  font-size: 1rem;
-}
-
 .metrics {
   border-bottom: 1px solid var(--line);
   background: var(--surface);
@@ -329,12 +361,15 @@ pre {
   line-height: 1;
 }
 
-.metrics span {
+.metrics span,
+.sample-content p,
+.sample-content span,
+.workflow-grid p,
+.contact-section p {
   color: var(--muted);
 }
 
 .section,
-.samples-section,
 .stack-section,
 .workflow-section,
 .contact-section {
@@ -366,15 +401,6 @@ pre {
   box-shadow: 0 16px 50px rgba(13, 17, 16, 0.08);
 }
 
-.sample-card:nth-child(even) {
-  grid-template-columns: 1fr;
-}
-
-.sample-card:nth-child(even) .sample-preview {
-  order: 0;
-  border-left: 0;
-}
-
 .sample-preview {
   position: relative;
   display: grid;
@@ -382,7 +408,6 @@ pre {
   min-height: 320px;
   place-items: center;
   overflow: hidden;
-  border-right: 0;
   border-bottom: 1px solid var(--line);
   background:
     linear-gradient(90deg, rgba(13, 17, 16, 0.07) 1px, transparent 1px) 0 0 / 26px 26px,
@@ -395,16 +420,6 @@ pre {
   content: "";
   border: 10px solid rgba(255, 255, 255, 0.34);
   pointer-events: none;
-}
-
-.sample-preview span {
-  z-index: 1;
-  border: 1px solid var(--ink);
-  padding: 9px 12px;
-  background: var(--green);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.84rem;
-  font-weight: 800;
 }
 
 .sample-preview img {
@@ -423,13 +438,6 @@ pre {
   min-width: 0;
   max-width: 820px;
   padding: clamp(20px, 3vw, 28px);
-}
-
-.sample-content p,
-.sample-content span,
-.workflow-grid p,
-.contact-section p {
-  color: var(--muted);
 }
 
 .sample-content p {
@@ -477,11 +485,12 @@ pre {
   overflow-wrap: anywhere;
 }
 
-.tech-tags {
+.tech-tags,
+.sample-links,
+.stack-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 2px;
 }
 
 .tech-tags span {
@@ -495,9 +504,6 @@ pre {
 }
 
 .sample-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
   margin-top: 6px;
 }
 
@@ -520,8 +526,6 @@ pre {
 }
 
 .stack-list {
-  display: flex;
-  flex-wrap: wrap;
   align-content: start;
   gap: 10px;
 }
@@ -643,25 +647,8 @@ pre {
     min-height: auto;
   }
 
-  .sample-grid,
   .workflow-grid {
     grid-template-columns: 1fr;
-  }
-
-  .sample-card,
-  .sample-card:nth-child(even) {
-    grid-template-columns: 1fr;
-  }
-
-  .sample-card:nth-child(even) .sample-preview {
-    order: 0;
-    border-left: 0;
-  }
-
-  .sample-preview,
-  .sample-card:nth-child(even) .sample-preview {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
   }
 
   .metrics {
@@ -697,6 +684,14 @@ pre {
 
   .terminal-card {
     margin-inline: -8px;
+  }
+
+  .hero-portrait-card {
+    margin-inline: -8px;
+  }
+
+  .portrait-frame {
+    min-height: 380px;
   }
 
   .project-details div {
